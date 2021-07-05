@@ -1,0 +1,22 @@
+package com.demo.entities;
+
+public class Fresher {
+	
+	private int id;
+	private String name;
+	
+	
+	
+	public Fresher() {
+		super();
+	}
+
+
+	public Fresher(String name) {
+		super();
+		this.name = name;
+	}
+	
+	
+
+}

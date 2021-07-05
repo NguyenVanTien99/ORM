@@ -1,0 +1,57 @@
+package com.demo;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.demo.entities.Courses;
+import com.demo.entities.Fresher;
+
+public class Main {
+	public static void main(String[] args) {
+		
+		
+//		Courses courses = new Courses();
+//		courses.setId(1);
+//		courses.setName("ORM");
+//
+//		SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+//		
+//		try {
+//			Session session = sessionFactory.openSession();
+//			
+//			session.beginTransaction();
+//			
+//			session.save(courses);
+//			
+//			session.getTransaction().commit();
+//		} catch (Exception e) {
+//			System.out.println(e.toString()); 
+//		}
+		
+		HibernateUtils.getSessionFactory().close();
+		
+	}
+	
+	private static void createFresher() {
+		
+		Fresher fresher = new Fresher("Tien")
+		
+		SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+		
+		try {
+			Session session = sessionFactory.openSession();
+			
+			session.beginTransaction();
+			
+			session.save(courses);
+			
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			System.out.println(e.toString()); 
+		}
+	}
+	
+	
+}
+
+

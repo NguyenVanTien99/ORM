@@ -1,0 +1,5 @@
+package com.A101.entities;
+
+public class RoomDetail {
+
+}

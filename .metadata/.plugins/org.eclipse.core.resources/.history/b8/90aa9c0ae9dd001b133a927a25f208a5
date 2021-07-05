@@ -1,0 +1,28 @@
+package com.A101.entities;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+public class RoomDetail {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "CINEMA_ROOM_DETAIL_ID")
+	private int roomDetailId;
+	
+	@Column(name = "CINEMA_RATE")
+	private int roomRate;
+	
+	@Column(name = "ACTIVE_DATE")
+	private Date activeDate;
+	
+	@Column(name = "ROOM_DECRIPTION")
+	private String decription;
+	
+	@OneToOne
+	private Room room;
+}
