@@ -25,6 +25,8 @@
 	</section>
 	<section name="Maven2ProjectWizardArchifactPage">
 		<list key="package">
+			<item value="com.la101"/>
+			<item value="com.a100"/>
 			<item value="com.A101"/>
 			<item value="com.demo"/>
 		</list>
@@ -32,6 +34,8 @@
 			<item value="com"/>
 		</list>
 		<list key="artifactId">
+			<item value="la101"/>
+			<item value="a100"/>
 			<item value="A101"/>
 			<item value="demo"/>
 		</list>
