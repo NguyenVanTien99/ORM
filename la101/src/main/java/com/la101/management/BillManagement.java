@@ -18,7 +18,8 @@ public class BillManagement {
 			System.out.println("----------- Management ---------------");
 			System.out.println("1.Add new Bills");
 			System.out.println("2.Show all bills");
-			System.out.println("3.Back");
+			System.out.println("3.Find Bill By Date");
+			System.out.println("4.Back");
 			System.out.println("0.Exit");
 			System.out.println("------------------------------------------------------");
 			System.out.print("please Select: ");
@@ -31,10 +32,18 @@ public class BillManagement {
 				break;
 
 			case 2:
-				
+
+				billServices.showAllbill();
+
 				break;
 
 			case 3:
+
+				billServices.findByDate();
+
+				break;
+
+			case 4:
 				Management.showMenu();
 				break;
 

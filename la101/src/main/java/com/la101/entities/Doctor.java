@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +24,8 @@ public class Doctor {
 
 	@Column(name = "Doc_Lastname")
 	private String lastName;
-	
-	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL.ALL, fetch = FetchType.EAGER)
 	private List<Appointment> appointments;
 
 	public Doctor() {
@@ -61,12 +62,17 @@ public class Doctor {
 		this.lastName = lastName;
 	}
 
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
 	@Override
 	public String toString() {
 		return "Doctor [number=" + number + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
-
-	
-	
 
 }

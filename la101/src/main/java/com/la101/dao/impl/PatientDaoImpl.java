@@ -1,6 +1,7 @@
 package com.la101.dao.impl;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +149,45 @@ public class PatientDaoImpl implements PatientDao<Patient> {
 			}
 		}
 
+	}
+
+	@Override
+	public List<Patient> paging(String pageNumber, String row) {
+		Session session = null;
+		Transaction transaction = null;
+		
+		List<Patient> patients = null;
+
+		try {
+
+			session = HibernateUtils.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+
+			Query<Patient> query = session.createSQLQuery("EXEC [PROC_PAGING] :pageNumber, :row")
+					.addEntity(Patient.class).setParameter("pageNumber", pageNumber).setParameter("row", row);
+
+			patients = query.list();
+
+			transaction.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			transaction.rollback();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return patients;
+
+	}
+
+	public static void main(String[] args) {
+		PatientDaoImpl daoImpl = new PatientDaoImpl();
+
+		daoImpl.paging("1", "3");
 	}
 
 }

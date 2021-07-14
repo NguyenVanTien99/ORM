@@ -2,6 +2,7 @@ package com.la101.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Payment {
 	@Column(name = "Pay_Amount")
 	private Double payAmount;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Bill_Number")
 	private Bill bill;
 
@@ -113,5 +114,13 @@ public class Payment {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	@Override
+	public String toString() {
+		return "Payment [payReceiptnum=" + payReceiptnum + ", payDate=" + payDate + ", payMethod=" + payMethod
+				+ ", payAmount=" + payAmount + "]";
+	}
+	
+	
 
 }

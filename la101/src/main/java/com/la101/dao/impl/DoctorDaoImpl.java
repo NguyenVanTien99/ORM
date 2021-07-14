@@ -141,6 +141,7 @@ public class DoctorDaoImpl implements DoctorDao<Doctor> {
 			transaction.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			transaction.rollback();
 		} finally {

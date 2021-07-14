@@ -1,15 +1,14 @@
 package com.la101.services.impl;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
-import org.hibernate.query.Query;
+import org.hibernate.mapping.Value;
 
 import com.la101.dao.AppointmentDao;
 import com.la101.dao.BillDao;
@@ -26,6 +25,7 @@ import com.la101.entities.Patient;
 import com.la101.services.AppointmentServices;
 import com.la101.services.DoctorServices;
 import com.la101.services.PatientServices;
+import com.la101.utils.Validator;
 
 public class AppointmentServicesImpl implements AppointmentServices {
 
@@ -35,29 +35,62 @@ public class AppointmentServicesImpl implements AppointmentServices {
 
 	PatientServices patientServices = new PatientServicesImpl();
 
-	DoctorDao<Doctor> doctorDao = new DoctorDaoImpl();
+	static DoctorDao<Doctor> doctorDao = new DoctorDaoImpl();
 
 	PatientDao<Patient> patientDao = new PatientDaoImpl();
 
 	AppointmentDao<Appointment> appointmentDao = new AppointmentDaoImpl();
-	
+
 	BillDao<Bill> billDao = new BillDaoImpl();
 
 	public void addNewAppointment() {
 
 		Appointment appointment = null;
 
-		System.out.println("Enter the Date:");
+		String date;
 
-		String date = scanner.nextLine();
+		do {
+			System.out.println("Enter the Date:");
 
-		System.out.println("Enter the time");
+			date = scanner.nextLine();
 
-		String time = scanner.nextLine();
+			if (!Validator.isDate(date)) {
+				System.out.println("Date is format MM/dd/yyy");
+				continue;
+			}
 
-		System.out.println("Enter duration");
+			break;
+		} while (true);
 
-		String duration = scanner.nextLine();
+		String time;
+
+		do {
+			System.out.println("Enter the time");
+
+			time = scanner.nextLine();
+
+			if (!Validator.isTime(time)) {
+				System.out.println("Time is format HH:mm");
+				continue;
+			}
+
+			break;
+		} while (true);
+
+		String duration;
+
+		do {
+
+			System.out.println("Enter duration");
+			duration = scanner.nextLine();
+
+			if (!Validator.isNumber(duration)) {
+				System.out.println("Value is number");
+				continue;
+			}
+
+			break;
+		} while (true);
 
 		System.out.println("Enter reason");
 
@@ -101,77 +134,124 @@ public class AppointmentServicesImpl implements AppointmentServices {
 			}
 		} while (true);
 
-		try {
-			appointment = new Appointment();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-			appointment.setDate(new SimpleDateFormat("MM/dd/yyyy").parse(date));
+		if (!checkTimeconflict(doctor, date, time, duration)) {
+			try {
+				appointment = new Appointment();
 
-			appointment.setTime(new SimpleDateFormat("HH:mm").parse(time));
+				appointment.setDate(new SimpleDateFormat("MM/dd/yyyy").parse(date));
 
-			appointment.setDuration(Integer.valueOf(duration));
+				appointment.setTime(LocalTime.parse(time, formatter));
 
-			appointment.setReason(reason);
+				appointment.setDuration(Integer.valueOf(duration));
 
-			appointment.setDoctor(doctor);
+				appointment.setReason(reason);
 
-			appointment.setPatient(patient);
+				appointment.setDoctor(doctor);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Data found");
-		}
+				appointment.setPatient(patient);
 
-		Appointment appointmentExist = appointmentDao.getByDateAndPatient(date, patient);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Data found");
+			}
 
-		if (appointmentExist != null) {
-			appointment.setId(appointmentExist.getId());
-			appointmentDao.update(appointment);
-			System.out.println("Update success");
+			Appointment appointmentExist = appointmentDao.getByDateAndPatient(date, patient);
+
+			if (appointmentExist != null) {
+
+				doctor.getAppointments().remove(appointmentExist);
+
+				if (!checkTimeconflict(doctor, date, time, duration)) {
+					appointment.setId(appointmentExist.getId());
+					appointmentDao.update(appointment);
+					System.out.println("Update success");
+				} else {
+					System.out.println("conflict Appointment");
+				}
+
+			} else {
+				appointmentDao.save(appointment);
+				System.out.println("Add success");
+				try {
+					Bill bill = new Bill(new SimpleDateFormat("MM/dd/yyyy").parse(date), "0");
+					bill.setAppointment(appointment);
+					billDao.save(bill);
+				} catch (ParseException e) {
+					System.out.println("Add Bill False");
+					e.printStackTrace();
+				}
+			}
+
 		} else {
-			appointmentDao.save(appointment);
-			System.out.println("Add success");
+			System.out.println("conflict Appointment");
 		}
-		
-		try {
-			Bill bill = new Bill(new SimpleDateFormat("MM/dd/yyyy").parse(date), "0");
-			billDao.save(bill);
-		} catch (ParseException e) {
-			System.out.println("Add Bill False"); 
-			e.printStackTrace();
-		}
-		
 
 	}
-	
+
 	public void showAllAppointment() {
 		List<Appointment> appointments = appointmentDao.getAll();
 
 		if (appointments.size() == 0) {
-			System.out.println("Doctor Empty");
+			System.out.println("Bill Empty");
 		} else {
 			for (Appointment appointment : appointments) {
 				System.out.println(appointment);
 			}
 		}
-		
+
+	}
+
+	public boolean checkTimeconflict(Doctor doctor, String date, String hour, String duration) {
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+		boolean check = true;
+
+		for (Appointment appointment : doctor.getAppointments()) {
+			if (!appointment.getDate().equals(new Date(date))) {
+				check = false;
+			} else {
+
+				LocalTime startAp = appointment.getTime();
+				LocalTime endAp = startAp.plusMinutes(Integer.valueOf(appointment.getDuration()));
+				LocalTime startAdd = LocalTime.parse(hour, formatter);
+				LocalTime endAdd = startAdd.plusMinutes(Integer.valueOf(duration));
+
+				check = true;
+
+				if (startAdd.isBefore(startAp) && endAdd.isBefore(startAp)) {
+					check = false;
+				} else if (startAdd.isAfter(endAp) && endAdd.isAfter(endAp)) {
+					check = false;
+				}
+
+				if (check == false) {
+					continue;
+				} else {
+					break;
+				}
+
+			}
+		}
+
+		return check;
+
 	}
 
 	public static void main(String[] args) {
+
+		Doctor doctor = doctorDao.getById(1);
+
 		AppointmentServicesImpl appointmentServicesImpl = new AppointmentServicesImpl();
 
-//		Date date = new Date("11/11/2002 17:30 ");
-//
-//		Calendar calendar = Calendar.getInstance();
-//		calendar.setTime(date);
-//		System.out.println(calendar);// c
-//		calendar.add(Calendar.MINUTE, 60);
-//
-//		System.out.println(calendar.getTime());
+		appointmentServicesImpl.addNewAppointment();
 
-		 appointmentServicesImpl.addNewAppointment();
+//		Boolean checkBoolean = appointmentServicesImpl.checkTimeconflict(doctor, "11/11/2020", "11:00", "120");
+//
+//		System.out.println(checkBoolean);
 
 	}
-
-	
 
 }

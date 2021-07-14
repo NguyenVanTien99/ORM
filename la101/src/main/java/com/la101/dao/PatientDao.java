@@ -12,5 +12,7 @@ public interface PatientDao <T> {
 	void update(T t);
 
 	void delete(int id);
+	
+	List<T> paging(String pageNumber,String row);
 
 }

@@ -2,7 +2,13 @@ package com.la101.dao.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -149,6 +155,91 @@ public class BillDaoImpl implements BillDao<Bill> {
 			}
 		}
 
+	}
+
+	public List<Bill> getBillByDate(String date) {
+		List<Bill> bills = new ArrayList<Bill>();
+
+		Session session = null;
+		Transaction transaction = null;
+
+		try {
+
+			session = HibernateUtils.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+
+			String hql = "FROM Bill b WHERE b.billDate = :date ";
+			
+			Query query = session.createQuery(hql);
+			
+			query.setParameter("date", new Date(date));
+			
+			bills = query.list();
+
+			transaction.commit();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			transaction.rollback();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+		return bills;
+	}
+
+	@Override
+	public List<Bill> paging(int pageNumber, int pageSize) {
+		List<Bill> bills = null;
+
+		Session session = null;
+		Transaction transaction = null;
+
+		try {
+
+			session = HibernateUtils.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+
+			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+			
+			CriteriaQuery<Bill> criteriaQuery = criteriaBuilder.createQuery(Bill.class);
+			
+			Root<Bill> root = criteriaQuery.from(Bill.class);
+			
+			criteriaQuery.select(root);
+			
+			Query<Bill> query = session.createQuery(criteriaQuery);
+			
+			//ignore
+			query.setFirstResult((pageNumber - 1) * pageSize);
+			query.setMaxResults(pageSize);
+			
+			bills = query.getResultList();
+
+			transaction.commit();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			transaction.rollback();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+		return bills;
+	}
+	
+	public static void main(String[] args) {
+		BillDaoImpl billDaoImpl = new BillDaoImpl();
+		
+		List<Bill> bills = billDaoImpl.paging(2, 3);
+		
+		for (Bill bill : bills) {
+			System.out.println(bill.getBillNumber());
+		}
 	}
 
 }

@@ -40,7 +40,7 @@ public class DoctorManagement {
 				break;
 
 			case 4:
-				doctorServices.DeleteDoctor();
+				doctorServices.deleteDoctor();
 				break;
 
 			case 5:

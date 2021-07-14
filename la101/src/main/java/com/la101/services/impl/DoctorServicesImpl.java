@@ -26,7 +26,7 @@ public class DoctorServicesImpl implements DoctorServices {
 		Doctor doctor = new Doctor(firstName, lastName);
 
 		if (doctorDao.save(doctor)) {
-			System.out.println("Success");
+			System.out.println("Add doctor Success");
 		} else {
 			System.out.println("Error");
 		}
@@ -46,8 +46,7 @@ public class DoctorServicesImpl implements DoctorServices {
 
 	}
 
-	@Override
-	public void DeleteDoctor() {
+	public void deleteDoctor() {
 		showAllDoctor();
 
 		Doctor doctor = null;
@@ -71,14 +70,13 @@ public class DoctorServicesImpl implements DoctorServices {
 
 		try {
 			doctorDao.delete(Integer.valueOf(numberDoctor));
-			System.out.println("delete success");
+			System.out.println("delete doctor success");
 		} catch (Exception e) {
 			System.out.println("error");
 		}
 
 	}
 
-	@Override
 	public void updateDoctor() {
 		showAllDoctor();
 
@@ -100,7 +98,7 @@ public class DoctorServicesImpl implements DoctorServices {
 				continue;
 			}
 		} while (true);
-		
+
 		System.out.println("Enter the First Name");
 
 		String firstName = scanner.nextLine();
@@ -110,11 +108,9 @@ public class DoctorServicesImpl implements DoctorServices {
 		String lastName = scanner.nextLine();
 
 		doctor.setFirstName(firstName);
-		
+
 		doctor.setLastName(lastName);
 
-		
-		
 		try {
 			doctorDao.update(doctor);
 			System.out.println("Update succes");

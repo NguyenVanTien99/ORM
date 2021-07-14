@@ -15,4 +15,8 @@ public interface BillDao <T> {
 
 	void delete(int id);
 	
+	List<T> getBillByDate(String date);
+	
+	List<T> paging(int pageNumber, int pageSize);
+	
 }

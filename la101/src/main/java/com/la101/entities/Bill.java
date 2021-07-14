@@ -3,8 +3,10 @@ package com.la101.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ public class Bill {
 	@JoinColumn(name = "App_Id")
 	private Appointment appointment;
 
-	@OneToMany(mappedBy = "bill")
+	@OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Payment> payments;
 
 	public Bill() {

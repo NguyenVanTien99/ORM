@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.demo.entities.Fresher"/>
-    <fullyQualifiedTypeName name="com.demo.entities.Address"/>
-    <fullyQualifiedTypeName name="com.demo.entities.Courses"/>
-    <fullyQualifiedTypeName name="javax.persistence.OneToMany"/>
-    <fullyQualifiedTypeName name="com.A101.entities.RoomDetail"/>
-    <fullyQualifiedTypeName name="javax.persistence.OneToOne"/>
-    <fullyQualifiedTypeName name="javax.xml.crypto.Data"/>
-    <fullyQualifiedTypeName name="java.util.Date"/>
-    <fullyQualifiedTypeName name="com.A101.entities.Room"/>
-    <fullyQualifiedTypeName name="javax.persistence.JoinColumn"/>
-    <fullyQualifiedTypeName name="com.A101.HibernateUtils"/>
-    <fullyQualifiedTypeName name="javax.persistence.Entity"/>
-    <fullyQualifiedTypeName name="javax.persistence.Table"/>
-    <fullyQualifiedTypeName name="javax.persistence.GeneratedValue"/>
     <fullyQualifiedTypeName name="javax.persistence.GenerationType"/>
     <fullyQualifiedTypeName name="javax.persistence.Id"/>
     <fullyQualifiedTypeName name="javax.persistence.Column"/>
@@ -21,7 +7,6 @@
     <fullyQualifiedTypeName name="java.lang.module.Configuration"/>
     <fullyQualifiedTypeName name="org.hibernate.cfg.Configuration"/>
     <fullyQualifiedTypeName name="com.a100.entities.Employee"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="com.a100.dao.EmployeeDao"/>
     <fullyQualifiedTypeName name="org.hibernate.Session"/>
     <fullyQualifiedTypeName name="org.hibernate.Transaction"/>
@@ -33,17 +18,12 @@
     <fullyQualifiedTypeName name="com.la101.services.DoctorServices"/>
     <fullyQualifiedTypeName name="com.la101.services.impl.DoctorServicesImpl"/>
     <fullyQualifiedTypeName name="com.la101.entities.Appointment"/>
-    <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
     <fullyQualifiedTypeName name="com.la101.entities.Doctor"/>
     <fullyQualifiedTypeName name="com.la101.services.PaymentServices"/>
     <fullyQualifiedTypeName name="com.la101.services.PatientServices"/>
     <fullyQualifiedTypeName name="com.la101.services.impl.PatientServicesImpl"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="com.la101.entities.Patient"/>
     <fullyQualifiedTypeName name="com.la101.dao.PatientDao"/>
-    <fullyQualifiedTypeName name="com.la101.dao.impl.PatientDaoImpl"/>
-    <fullyQualifiedTypeName name="java.lang.Integer"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="java.lang.Double"/>
     <fullyQualifiedTypeName name="com.la101.services.AppointmentServices"/>
     <fullyQualifiedTypeName name="javassist.expr.NewArray"/>
@@ -57,7 +37,27 @@
     <fullyQualifiedTypeName name="com.la101.entities.Payment"/>
     <fullyQualifiedTypeName name="com.la101.dao.PaymentDao"/>
     <fullyQualifiedTypeName name="com.la101.dao.impl.PaymentDaoImpl"/>
-    <fullyQualifiedTypeName name="com.la101.dao.impl.BillDaoImpl"/>
-    <fullyQualifiedTypeName name="com.la101.entities.Bill"/>
     <fullyQualifiedTypeName name="com.la101.dao.BillDao"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="com.la101.dao.impl.PatientDaoImpl"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="java.lang.Void"/>
+    <fullyQualifiedTypeName name="javax.persistence.criteria.CriteriaBuilder"/>
+    <fullyQualifiedTypeName name="com.la101.entities.Patient"/>
+    <fullyQualifiedTypeName name="javax.persistence.criteria.CriteriaQuery"/>
+    <fullyQualifiedTypeName name="javax.persistence.criteria.Root"/>
+    <fullyQualifiedTypeName name="org.hibernate.query.Query"/>
+    <fullyQualifiedTypeName name="com.la101.dao.impl.BillDaoImpl"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.la101.entities.Bill"/>
+    <fullyQualifiedTypeName name="javax.sound.midi.Soundbank"/>
+    <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
+    <fullyQualifiedTypeName name="java.util.regex.Matcher"/>
+    <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
+    <fullyQualifiedTypeName name="java.time.format.DateTimeParseException"/>
+    <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="org.hibernate.mapping.Value"/>
+    <fullyQualifiedTypeName name="org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate"/>
+    <fullyQualifiedTypeName name="com.la101.utils.Validator"/>
 </qualifiedTypeNameHistroy>

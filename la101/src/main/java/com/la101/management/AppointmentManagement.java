@@ -5,12 +5,10 @@ import java.util.Scanner;
 import com.la101.services.AppointmentServices;
 import com.la101.services.impl.AppointmentServicesImpl;
 
-
-
 public class AppointmentManagement {
-	
+
 	static AppointmentServices appointmentServices = new AppointmentServicesImpl();
-	
+
 	public static void showMenu() {
 		int choice;
 		@SuppressWarnings("resource")
@@ -29,7 +27,6 @@ public class AppointmentManagement {
 			switch (choice) {
 			case 1:
 				appointmentServices.addNewAppointment();
-
 				break;
 
 			case 2:

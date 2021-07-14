@@ -1,6 +1,8 @@
 package com.la101.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -35,9 +37,8 @@ public class Appointment implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
-	@Column(name = "App_Time")
-	@Temporal(TemporalType.TIME)
-	private Date time;
+	@Column(name = "App_Time", columnDefinition = "time(0)")
+	private LocalTime time;
 
 	@Column(name = "App_Duration")
 	private int duration;
@@ -49,10 +50,10 @@ public class Appointment implements Serializable {
 	@JoinColumn(name = "Doc_Number")
 	private Doctor doctor;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "Pat_id")
 	private Patient patient;
-	
+
 	@OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
 	private Bill bill;
 
@@ -60,7 +61,7 @@ public class Appointment implements Serializable {
 		super();
 	}
 
-	public Appointment(Date date, Date time, int duration, String reason) {
+	public Appointment(Date date, LocalTime time, int duration, String reason) {
 		super();
 		this.date = date;
 		this.time = time;
@@ -68,7 +69,7 @@ public class Appointment implements Serializable {
 		this.reason = reason;
 	}
 
-	public Appointment(Date date, Date time, int duration, String reason, Doctor doctor, Patient patient) {
+	public Appointment(Date date, LocalTime time, int duration, String reason, Doctor doctor, Patient patient) {
 		super();
 		this.date = date;
 		this.time = time;
@@ -77,10 +78,9 @@ public class Appointment implements Serializable {
 		this.doctor = doctor;
 		this.patient = patient;
 	}
-	
-	
 
-	public Appointment(Date date, Date time, int duration, String reason, Doctor doctor, Patient patient, Bill bill) {
+	public Appointment(Date date, LocalTime time, int duration, String reason, Doctor doctor, Patient patient,
+			Bill bill) {
 		super();
 		this.date = date;
 		this.time = time;
@@ -115,11 +115,11 @@ public class Appointment implements Serializable {
 		this.date = date;
 	}
 
-	public Date getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(LocalTime time) {
 		this.time = time;
 	}
 
@@ -160,6 +160,5 @@ public class Appointment implements Serializable {
 		return "Appointment [id=" + id + ", date=" + date + ", time=" + time + ", duration=" + duration + ", reason="
 				+ reason + ", doctor=" + doctor.getNumber() + ", patient=" + patient.getId() + "]";
 	}
-	
 
 }
