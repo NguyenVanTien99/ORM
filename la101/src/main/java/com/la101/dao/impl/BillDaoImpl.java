@@ -169,11 +169,11 @@ public class BillDaoImpl implements BillDao<Bill> {
 			transaction = session.beginTransaction();
 
 			String hql = "FROM Bill b WHERE b.billDate = :date ";
-			
+
 			Query query = session.createQuery(hql);
-			
+
 			query.setParameter("date", new Date(date));
-			
+
 			bills = query.list();
 
 			transaction.commit();
@@ -190,7 +190,6 @@ public class BillDaoImpl implements BillDao<Bill> {
 		return bills;
 	}
 
-	@Override
 	public List<Bill> paging(int pageNumber, int pageSize) {
 		List<Bill> bills = null;
 
@@ -203,19 +202,19 @@ public class BillDaoImpl implements BillDao<Bill> {
 			transaction = session.beginTransaction();
 
 			CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-			
+
 			CriteriaQuery<Bill> criteriaQuery = criteriaBuilder.createQuery(Bill.class);
-			
+
 			Root<Bill> root = criteriaQuery.from(Bill.class);
-			
+
 			criteriaQuery.select(root);
-			
+
 			Query<Bill> query = session.createQuery(criteriaQuery);
-			
-			//ignore
+
+			// ignore
 			query.setFirstResult((pageNumber - 1) * pageSize);
 			query.setMaxResults(pageSize);
-			
+
 			bills = query.getResultList();
 
 			transaction.commit();
@@ -231,12 +230,12 @@ public class BillDaoImpl implements BillDao<Bill> {
 
 		return bills;
 	}
-	
+
 	public static void main(String[] args) {
 		BillDaoImpl billDaoImpl = new BillDaoImpl();
-		
-		List<Bill> bills = billDaoImpl.paging(2, 3);
-		
+
+		List<Bill> bills = billDaoImpl.paging(1, 3);
+
 		for (Bill bill : bills) {
 			System.out.println(bill.getBillNumber());
 		}

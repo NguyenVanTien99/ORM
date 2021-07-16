@@ -31,6 +31,9 @@ public class Bill {
 	@Column(name = "Bill_Status")
 	private String billStatus;
 
+	@Column(name = "Bill_Total")
+	private Double total;
+
 	@OneToOne
 	@JoinColumn(name = "App_Id")
 	private Appointment appointment;
@@ -42,10 +45,11 @@ public class Bill {
 		super();
 	}
 
-	public Bill(Date billDate, String billStatus) {
+	public Bill(Date billDate, String billStatus, Double total) {
 		super();
 		this.billDate = billDate;
 		this.billStatus = billStatus;
+		this.total = total;
 	}
 
 	public Bill(Date billDate, String billStatus, Appointment appointment, List<Payment> payments) {
@@ -54,6 +58,14 @@ public class Bill {
 		this.billStatus = billStatus;
 		this.appointment = appointment;
 		this.payments = payments;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	public int getBillNumber() {
@@ -100,7 +112,5 @@ public class Bill {
 	public String toString() {
 		return "Bill [billNumber=" + billNumber + ", billDate=" + billDate + ", billStatus=" + billStatus + "]";
 	}
-	
-	
 
 }

@@ -151,7 +151,6 @@ public class PatientDaoImpl implements PatientDao<Patient> {
 
 	}
 
-	@Override
 	public List<Patient> paging(String pageNumber, String row) {
 		Session session = null;
 		Transaction transaction = null;
@@ -163,7 +162,7 @@ public class PatientDaoImpl implements PatientDao<Patient> {
 			session = HibernateUtils.getSessionFactory().openSession();
 			transaction = session.beginTransaction();
 
-			Query<Patient> query = session.createSQLQuery("EXEC [PROC_PAGING] :pageNumber, :row")
+			Query<Patient> query = session.createSQLQuery("EXEC [PR_PAGE] :pageNumber, :row")
 					.addEntity(Patient.class).setParameter("pageNumber", pageNumber).setParameter("row", row);
 
 			patients = query.list();
@@ -187,7 +186,11 @@ public class PatientDaoImpl implements PatientDao<Patient> {
 	public static void main(String[] args) {
 		PatientDaoImpl daoImpl = new PatientDaoImpl();
 
-		daoImpl.paging("1", "3");
+		List<Patient> patients =  daoImpl.paging("0", "3");
+		
+		for (Patient patient : patients) {
+			System.out.println(patient.getId());
+		}
 	}
 
 }

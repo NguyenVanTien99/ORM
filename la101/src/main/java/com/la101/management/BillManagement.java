@@ -19,7 +19,8 @@ public class BillManagement {
 			System.out.println("1.Add new Bills");
 			System.out.println("2.Show all bills");
 			System.out.println("3.Find Bill By Date");
-			System.out.println("4.Back");
+			System.out.println("4.paging");
+			System.out.println("5.Back");
 			System.out.println("0.Exit");
 			System.out.println("------------------------------------------------------");
 			System.out.print("please Select: ");
@@ -44,6 +45,10 @@ public class BillManagement {
 				break;
 
 			case 4:
+				billServices.paging();
+				break;
+				
+			case 5:
 				Management.showMenu();
 				break;
 

@@ -6,9 +6,9 @@ import java.util.Scanner;
 import com.la101.dao.PatientDao;
 import com.la101.dao.impl.PatientDaoImpl;
 import com.la101.entities.Appointment;
-import com.la101.entities.Doctor;
 import com.la101.entities.Patient;
 import com.la101.services.PatientServices;
+import com.la101.utils.Validator;
 
 public class PatientServicesImpl implements PatientServices {
 
@@ -61,21 +61,61 @@ public class PatientServicesImpl implements PatientServices {
 
 	public void showAllPatientAndBill() {
 		List<Patient> patients = patientDao.getAll();
-		
-		
+
 		for (Patient patient : patients) {
 			for (Appointment appointment : patient.getAppointments()) {
-				System.out.println("ID of patient: " + appointment.getPatient().getId() + " - BillNumber: " + appointment.getBill().getBillNumber());
+				System.out.println("ID of patient: " + appointment.getPatient().getId() + " - BillNumber: "
+						+ appointment.getBill().getBillNumber());
 			}
 		}
-		
-		
+
 	}
-	
+
+	public void paging() {
+		String pageNumber;
+
+		String size;
+
+		do {
+			System.out.println("Enter the page number");
+
+			pageNumber = scanner.nextLine();
+
+			if (!Validator.isNumber(pageNumber)) {
+				System.out.println("Number is value");
+				continue;
+			}
+
+			break;
+		} while (true);
+
+		do {
+			System.out.println("Enter the size");
+
+			size = scanner.nextLine();
+
+			if (!Validator.isNumber(size)) {
+				System.out.println("Number is value");
+				continue;
+			}
+
+			break;
+		} while (true);
+
+		int pageParam = Integer.parseInt(pageNumber) - 1;
+
+		List<Patient> patients = patientDao.paging(String.valueOf(pageParam), size);
+		
+		for (Patient patient : patients) {
+			System.out.println(patient);
+		}
+
+	}
+
 	public static void main(String[] args) {
 		PatientServicesImpl patientServicesImpl = new PatientServicesImpl();
-		
-		patientServicesImpl.showAllPatientAndBill();
+
+		patientServicesImpl.paging();
 	}
 
 }

@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import org.hibernate.mapping.Value;
-
 import com.la101.dao.AppointmentDao;
 import com.la101.dao.BillDao;
 import com.la101.dao.DoctorDao;
@@ -136,6 +134,28 @@ public class AppointmentServicesImpl implements AppointmentServices {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
+		Appointment appointmentExist = appointmentDao.getByDateAndPatient(date, patient);
+
+		if (appointmentExist != null) {
+			System.out.println(appointmentExist.getId());
+
+			if (doctor.getAppointments().size() > 0) {
+				int indexAppointmentExist = 0;
+
+				for (int i = 0; i < doctor.getAppointments().size(); i++) {
+					if (doctor.getAppointments().get(i).getId() == appointmentExist.getId()) {
+						indexAppointmentExist = i;
+					}
+
+				}
+
+				doctor.getAppointments().remove(indexAppointmentExist);
+
+				System.out.println(doctor.getAppointments().size());
+			}
+
+		}
+
 		if (!checkTimeconflict(doctor, date, time, duration)) {
 			try {
 				appointment = new Appointment();
@@ -157,31 +177,25 @@ public class AppointmentServicesImpl implements AppointmentServices {
 				System.out.println("Data found");
 			}
 
-			Appointment appointmentExist = appointmentDao.getByDateAndPatient(date, patient);
-
 			if (appointmentExist != null) {
 
-				doctor.getAppointments().remove(appointmentExist);
-
-				if (!checkTimeconflict(doctor, date, time, duration)) {
-					appointment.setId(appointmentExist.getId());
-					appointmentDao.update(appointment);
-					System.out.println("Update success");
-				} else {
-					System.out.println("conflict Appointment");
-				}
+				appointment.setId(appointmentExist.getId());
+				appointmentDao.update(appointment);
+				System.out.println("Update success");
 
 			} else {
+
 				appointmentDao.save(appointment);
+
 				System.out.println("Add success");
-				try {
-					Bill bill = new Bill(new SimpleDateFormat("MM/dd/yyyy").parse(date), "0");
-					bill.setAppointment(appointment);
-					billDao.save(bill);
-				} catch (ParseException e) {
-					System.out.println("Add Bill False");
-					e.printStackTrace();
-				}
+//				try {
+//					Bill bill = new Bill(new SimpleDateFormat("MM/dd/yyyy").parse(date), "0");
+//					bill.setAppointment(appointment);
+//					billDao.save(bill);
+//				} catch (ParseException e) {
+//					System.out.println("Add Bill False");
+//					e.printStackTrace();
+//				}
 			}
 
 		} else {
@@ -194,7 +208,7 @@ public class AppointmentServicesImpl implements AppointmentServices {
 		List<Appointment> appointments = appointmentDao.getAll();
 
 		if (appointments.size() == 0) {
-			System.out.println("Bill Empty");
+			System.out.println("appointment Empty");
 		} else {
 			for (Appointment appointment : appointments) {
 				System.out.println(appointment);
@@ -208,6 +222,10 @@ public class AppointmentServicesImpl implements AppointmentServices {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
 		boolean check = true;
+
+		if (doctor.getAppointments().size() == 0) {
+			return false;
+		}
 
 		for (Appointment appointment : doctor.getAppointments()) {
 			if (!appointment.getDate().equals(new Date(date))) {

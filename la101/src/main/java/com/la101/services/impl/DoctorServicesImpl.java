@@ -7,6 +7,7 @@ import com.la101.dao.DoctorDao;
 import com.la101.dao.impl.DoctorDaoImpl;
 import com.la101.entities.Doctor;
 import com.la101.services.DoctorServices;
+import com.la101.utils.Validator;
 
 public class DoctorServicesImpl implements DoctorServices {
 
@@ -54,9 +55,20 @@ public class DoctorServicesImpl implements DoctorServices {
 		String numberDoctor = null;
 
 		do {
-			System.out.println("Enter the number doctor");
 
-			numberDoctor = scanner.nextLine();
+			do {
+
+				System.out.println("Enter the number doctor");
+
+				numberDoctor = scanner.nextLine();
+
+				if (!Validator.isNumber(numberDoctor)) {
+					System.out.println("Value is number");
+				}
+
+				break;
+
+			} while (true);
 
 			doctor = doctorDao.getById(Integer.valueOf(numberDoctor));
 
@@ -85,9 +97,19 @@ public class DoctorServicesImpl implements DoctorServices {
 		String numberDoctor = null;
 
 		do {
-			System.out.println("Enter the number doctor");
+			do {
 
-			numberDoctor = scanner.nextLine();
+				System.out.println("Enter the number doctor");
+
+				numberDoctor = scanner.nextLine();
+
+				if (!Validator.isNumber(numberDoctor)) {
+					System.out.println("Value is number");
+				}
+
+				break;
+
+			} while (true);
 
 			doctor = doctorDao.getById(Integer.valueOf(numberDoctor));
 

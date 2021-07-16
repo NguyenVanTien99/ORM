@@ -1,6 +1,5 @@
 package com.la101.services.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
@@ -95,7 +94,7 @@ public class BillServicesImpl implements BillServices {
 	}
 
 	public void findByDate() {
-		
+
 		String billDate;
 
 		do {
@@ -137,11 +136,50 @@ public class BillServicesImpl implements BillServices {
 
 	}
 
+	public void paging() {
+
+		String pageNumber;
+
+		String size;
+
+		do {
+			System.out.println("Enter the page number");
+
+			pageNumber = scanner.nextLine();
+
+			if (!Validator.isNumber(pageNumber)) {
+				System.out.println("Number is value");
+				continue;
+			}
+
+			break;
+		} while (true);
+
+		do {
+			System.out.println("Enter the size");
+
+			size = scanner.nextLine();
+
+			if (!Validator.isNumber(size)) {
+				System.out.println("Number is value");
+				continue;
+			}
+
+			break;
+		} while (true);
+
+		List<Bill> bills = billDao.paging(Integer.valueOf(pageNumber), Integer.valueOf(size));
+
+		for (Bill bill : bills) {
+			System.out.println(bill);
+		}
+
+	}
+
 	public static void main(String[] args) {
 		BillServicesImpl billServicesImpl = new BillServicesImpl();
 
-		billServicesImpl.showAllbill();
-		;
+		billServicesImpl.paging();
 	}
 
 }

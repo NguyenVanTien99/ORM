@@ -176,7 +176,6 @@ public class AppointmentDaoImpl implements AppointmentDao<Appointment> {
 			transaction.commit();
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			transaction.rollback();
 		} finally {
 			if (session != null) {

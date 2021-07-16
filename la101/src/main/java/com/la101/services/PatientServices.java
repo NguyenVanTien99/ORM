@@ -5,4 +5,6 @@ public interface PatientServices {
 	void showAllPatient();
 	
 	void showAllPatientAndBill();
+	
+	void paging();
 }

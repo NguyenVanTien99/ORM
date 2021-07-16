@@ -1,7 +1,7 @@
 package com.la101.services.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import com.la101.dao.BillDao;
@@ -16,6 +16,7 @@ import com.la101.entities.Payment;
 import com.la101.services.BillServices;
 import com.la101.services.PatientServices;
 import com.la101.services.PaymentServices;
+import com.la101.utils.Validator;
 
 public class PaymentServicesImpl implements PaymentServices {
 
@@ -38,9 +39,21 @@ public class PaymentServicesImpl implements PaymentServices {
 
 		do {
 
-			System.out.println("Enter the id Of patient");
+			String idPattent;
 
-			String idPattent = scanner.nextLine();
+			do {
+
+				System.out.println("Enter the id Of patient");
+
+				idPattent = scanner.nextLine();
+
+				if (!Validator.isNumber(idPattent)) {
+					System.out.println("Value is number");
+				}
+
+				break;
+
+			} while (true);
 
 			patient = patientDao.getById(Integer.valueOf(idPattent));
 
@@ -55,9 +68,21 @@ public class PaymentServicesImpl implements PaymentServices {
 
 		do {
 
-			System.out.println("Enter the number of bill");
+			String billNumber;
 
-			String billNumber = scanner.nextLine();
+			do {
+
+				System.out.println("Enter the number of bill");
+
+				billNumber = scanner.nextLine();
+
+				if (!Validator.isNumber(billNumber)) {
+					System.out.println("Value is number");
+				}
+
+				break;
+
+			} while (true);
 
 			bill = billDao.getById(Integer.valueOf(billNumber));
 
@@ -68,17 +93,39 @@ public class PaymentServicesImpl implements PaymentServices {
 			continue;
 		} while (true);
 
-		System.out.println("Enter the date");
+		String date;
 
-		String date = scanner.nextLine();
+		do {
+
+			System.out.println("Enter the date");
+
+			date = scanner.nextLine();
+
+			if (!Validator.isDate(date)) {
+				System.out.println("Date is format MM/dd/yyyy");
+				continue;
+			}
+
+			break;
+		} while (true);
 
 		System.out.println("Enter the method");
 
 		String method = scanner.nextLine();
 
-		System.out.println("Enter the amount");
+		String amount;
 
-		String amount = scanner.nextLine();
+		do {
+			System.out.println("Enter the amount");
+
+			amount = scanner.nextLine();
+
+			if (!Validator.isNumber(amount)) {
+				System.out.println("Value is number");
+				continue;
+			}
+			break;
+		} while (true);
 
 		Payment payment = new Payment();
 
@@ -93,20 +140,61 @@ public class PaymentServicesImpl implements PaymentServices {
 
 		}
 
-		if (paymentDao.save(payment)) {
-			System.out.println("Add payment sucess");
-		} else {
-			System.out.println("Error");
+		Double totalAmountOfPayment = 0d;
+
+		for (Payment payment2 : bill.getPayments()) {
+			totalAmountOfPayment += payment2.getPayAmount();
+
 		}
 
+		if (totalAmountOfPayment < bill.getTotal()) {
+			if (paymentDao.save(payment)) {
+				System.out.println("Add payment sucess");
+			} else {
+				System.out.println("Error");
+			}
+			
+			checkStatusBill(bill.getBillNumber());
+
+		} else {
+
+			System.out.println("Bill Paid Done");
+		}
+
+	}
+
+	public void checkStatusBill(int id) {
+		Bill bill = billDao.getById(id);
+
+		Double totalAmountOfPayment = 0d;
+
+		for (Payment payment : bill.getPayments()) {
+			totalAmountOfPayment += payment.getPayAmount();
+
+		}
+
+		if (totalAmountOfPayment >= bill.getTotal()) {
+			bill.setBillStatus("1");
+			billDao.update(bill);
+		}
 	}
 
 	public void findPaymentByBill() {
 
 		billServices.showAllbill();
+		String idBill;
+		do {
 
-		System.out.println("Enter the number of bill");
-		String idBill = scanner.nextLine();
+			System.out.println("Enter the number of bill");
+			idBill = scanner.nextLine();
+
+			if (!Validator.isNumber(idBill)) {
+				System.out.println("Value is number");
+				continue;
+			}
+
+			break;
+		} while (true);
 
 		Bill bill = billDao.getById(Integer.valueOf(idBill));
 
@@ -125,7 +213,7 @@ public class PaymentServicesImpl implements PaymentServices {
 	public static void main(String[] args) {
 		PaymentServicesImpl paymentServicesImpl = new PaymentServicesImpl();
 
-		paymentServicesImpl.findPaymentByBill();
+		paymentServicesImpl.addNewPayment();
 	}
 
 }

@@ -8,8 +8,8 @@ import com.la101.services.impl.DoctorServicesImpl;
 import com.la101.services.impl.PatientServicesImpl;
 
 public class PatientManagement {
-	static PatientServices patientServices = new PatientServicesImpl() ;
-	
+	static PatientServices patientServices = new PatientServicesImpl();
+
 	public static void showMenu() {
 		int choice;
 		@SuppressWarnings("resource")
@@ -19,7 +19,8 @@ public class PatientManagement {
 			System.out.println("----------- Management ---------------");
 			System.out.println("1.Add new Patient");
 			System.out.println("2.Show all Patient");
-			System.out.println("3.Back");
+			System.out.println("3.paging");
+			System.out.println("4.Back");
 			System.out.println("0.Exit");
 			System.out.println("------------------------------------------------------");
 			System.out.print("please Select: ");
@@ -35,6 +36,10 @@ public class PatientManagement {
 				break;
 
 			case 3:
+				patientServices.paging();
+				break;
+				
+			case 4:
 				Management.showMenu();
 				break;
 

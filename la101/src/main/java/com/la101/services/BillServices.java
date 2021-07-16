@@ -4,4 +4,5 @@ public interface BillServices {
 	void addNewBill();
 	void findByDate();
 	void showAllbill();
+	void paging();
 }

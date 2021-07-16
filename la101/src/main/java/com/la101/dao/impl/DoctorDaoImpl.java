@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -13,13 +14,15 @@ import com.la101.entities.Doctor;
 import com.la101.utils.HibernateUtils;
 
 public class DoctorDaoImpl implements DoctorDao<Doctor> {
+	
+	private static final Logger logger = Logger.getLogger(DoctorDaoImpl.class);
 
 	public boolean save(Doctor doctor) {
 		Session session = null;
 		Transaction transaction = null;
 
 		try {
-
+			logger.info("open session");
 			session = HibernateUtils.getSessionFactory().openSession();
 			transaction = session.beginTransaction();
 
@@ -30,12 +33,14 @@ public class DoctorDaoImpl implements DoctorDao<Doctor> {
 			return (result != null);
 
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			return false;
 		} finally {
+			logger.info("close session");
 			if (session != null) {
 				session.close();
 			}
@@ -89,6 +94,7 @@ public class DoctorDaoImpl implements DoctorDao<Doctor> {
 			transaction.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			transaction.rollback();
 		} finally {
@@ -115,6 +121,7 @@ public class DoctorDaoImpl implements DoctorDao<Doctor> {
 			transaction.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			if (transaction != null) {
 				transaction.rollback();

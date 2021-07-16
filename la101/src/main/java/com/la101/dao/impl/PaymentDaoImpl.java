@@ -31,6 +31,7 @@ public class PaymentDaoImpl implements PaymentDao<Payment> {
 			return (result != null);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			if (transaction != null) {
 				transaction.rollback();
@@ -58,6 +59,7 @@ public class PaymentDaoImpl implements PaymentDao<Payment> {
 			transaction.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			if (transaction != null) {
 				transaction.rollback();
@@ -90,6 +92,7 @@ public class PaymentDaoImpl implements PaymentDao<Payment> {
 			transaction.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			transaction.rollback();
 		} finally {
@@ -141,6 +144,7 @@ public class PaymentDaoImpl implements PaymentDao<Payment> {
 			transaction.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 			transaction.rollback();
 		} finally {

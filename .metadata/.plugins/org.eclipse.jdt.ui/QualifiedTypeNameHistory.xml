@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.persistence.GenerationType"/>
-    <fullyQualifiedTypeName name="javax.persistence.Id"/>
     <fullyQualifiedTypeName name="javax.persistence.Column"/>
     <fullyQualifiedTypeName name="org.hibernate.SessionFactory"/>
     <fullyQualifiedTypeName name="java.lang.module.Configuration"/>
@@ -24,7 +22,6 @@
     <fullyQualifiedTypeName name="com.la101.services.impl.PatientServicesImpl"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="com.la101.dao.PatientDao"/>
-    <fullyQualifiedTypeName name="java.lang.Double"/>
     <fullyQualifiedTypeName name="com.la101.services.AppointmentServices"/>
     <fullyQualifiedTypeName name="javassist.expr.NewArray"/>
     <fullyQualifiedTypeName name="com.la101.services.impl.AppointmentServicesImpl"/>
@@ -34,7 +31,6 @@
     <fullyQualifiedTypeName name="com.la101.management.AppointmentManagement"/>
     <fullyQualifiedTypeName name="com.la101.management.BillManagement"/>
     <fullyQualifiedTypeName name="com.la101.management.PaymentManagement"/>
-    <fullyQualifiedTypeName name="com.la101.entities.Payment"/>
     <fullyQualifiedTypeName name="com.la101.dao.PaymentDao"/>
     <fullyQualifiedTypeName name="com.la101.dao.impl.PaymentDaoImpl"/>
     <fullyQualifiedTypeName name="com.la101.dao.BillDao"/>
@@ -49,15 +45,19 @@
     <fullyQualifiedTypeName name="org.hibernate.query.Query"/>
     <fullyQualifiedTypeName name="com.la101.dao.impl.BillDaoImpl"/>
     <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="com.la101.entities.Bill"/>
     <fullyQualifiedTypeName name="javax.sound.midi.Soundbank"/>
     <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
     <fullyQualifiedTypeName name="java.util.regex.Matcher"/>
     <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
     <fullyQualifiedTypeName name="java.time.format.DateTimeParseException"/>
-    <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
     <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="org.hibernate.mapping.Value"/>
     <fullyQualifiedTypeName name="org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate"/>
     <fullyQualifiedTypeName name="com.la101.utils.Validator"/>
+    <fullyQualifiedTypeName name="java.lang.Double"/>
+    <fullyQualifiedTypeName name="com.la101.entities.Payment"/>
+    <fullyQualifiedTypeName name="com.la101.entities.Bill"/>
+    <fullyQualifiedTypeName name="java.lang.IndexOutOfBoundsException"/>
+    <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
+    <fullyQualifiedTypeName name="org.apache.log4j.Logger"/>
 </qualifiedTypeNameHistroy>
